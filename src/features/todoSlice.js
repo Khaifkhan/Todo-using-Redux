@@ -10,6 +10,7 @@ const todoSlice = createSlice({
       state.value.push({
         id: Math.trunc(Math.random() * 10000000),
         text: action.payload.text,
+        completed: false,
       });
     },
     editTodo: (state, action) => {
@@ -22,8 +23,14 @@ const todoSlice = createSlice({
     deleteTodo: (state, action) => {
       state.value = state.value.filter((e) => e.id !== action.payload);
     },
+    toggleComplete: (state, action) => {
+      const completeTodo = state.value.find((e) => e.id === action.payload);
+      if (completeTodo) {
+        completeTodo.completed = !completeTodo.completed;
+      }
+    },
   },
 });
 
-export const { addTodo, editTodo, deleteTodo } = todoSlice.actions;
+export const { addTodo, editTodo, deleteTodo, toggleComplete } = todoSlice.actions;
 export default todoSlice.reducer;
